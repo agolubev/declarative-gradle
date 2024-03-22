@@ -16,7 +16,7 @@
 
 package org.gradle.api.experimental.android;
 
-import com.android.build.api.dsl.LibraryExtension;
+import com.android.build.api.dsl.ApplicationExtension;
 import com.android.build.api.variant.AndroidComponentsExtension;
 import org.gradle.api.Action;
 import org.gradle.api.JavaVersion;
@@ -36,8 +36,8 @@ public class AndroidDSLSupport {
     /**
      * Performs linking actions that must occur within an afterEvaluate block.
      */
-    public static void linkDslModelToPlugin(Project project, AndroidLibrary dslModel) {
-        LibraryExtension android = project.getExtensions().getByType(LibraryExtension.class);
+    public static void linkDslModelToPlugin(Project project, AndroidApplication dslModel) {
+        ApplicationExtension android = project.getExtensions().getByType(ApplicationExtension.class);
         KotlinAndroidProjectExtension kotlin = project.getExtensions().getByType(KotlinAndroidProjectExtension.class);
 
         // Link common properties
@@ -57,21 +57,21 @@ public class AndroidDSLSupport {
     /**
      * Performs linking actions that do not need to occur within an afterEvaluate block.
      */
-    public static void linkDslModelToPluginLazy(Project project, AndroidLibrary dslModel) {
+    public static void linkDslModelToPluginLazy(Project project, AndroidDeclarativeDependencies dslModel) {
         AndroidComponentsExtension<?, ?, ?> androidComponents = project.getExtensions().getByType(AndroidComponentsExtension.class);
 
         // Link common dependencies
         project.getConfigurations().getByName("implementation").getDependencies()
-                .addAllLater(dslModel.getDependencies().getImplementation().getDependencies());
+                .addAllLater(dslModel.getImplementation().getDependencies());
         project.getConfigurations().getByName("api").getDependencies()
-                .addAllLater(dslModel.getDependencies().getApi().getDependencies());
+                .addAllLater(dslModel.getApi().getDependencies());
         project.getConfigurations().getByName("compileOnly").getDependencies()
-                .addAllLater(dslModel.getDependencies().getCompileOnly().getDependencies());
+                .addAllLater(dslModel.getCompileOnly().getDependencies());
         project.getConfigurations().getByName("runtimeOnly").getDependencies()
-                .addAllLater(dslModel.getDependencies().getRuntimeOnly().getDependencies());
+                .addAllLater(dslModel.getRuntimeOnly().getDependencies());
 
         // Link target-specific properties
-        androidComponents.beforeVariants(androidComponents.selector().all(), variant -> {
+        /*androidComponents.beforeVariants(androidComponents.selector().all(), variant -> {
             AndroidTarget target = getTarget(dslModel, variant.getName());
             if (target == null) {
                 // The user did not add any target-specific configuration.
@@ -101,7 +101,7 @@ public class AndroidDSLSupport {
                     .addAllLater(target.getDependencies().getCompileOnly().getDependencies());
             project.getConfigurations().getByName(name + "RuntimeOnly").getDependencies()
                     .addAllLater(target.getDependencies().getRuntimeOnly().getDependencies());
-        });
+        });*/
     }
 
     private static <T> void ifPresent(Property<T> property, Action<T> action) {
@@ -110,15 +110,16 @@ public class AndroidDSLSupport {
         }
     }
 
-    private static Set<AndroidTarget> getTargets(AndroidLibrary dslModel) {
+   /* private static Set<AndroidTarget> getTargets(AndroidApplication dslModel) {
         return Set.of(dslModel.getTargets().getDebug(), dslModel.getTargets().getRelease());
     }
 
     @Nullable
-    private static AndroidTarget getTarget(AndroidLibrary dslModel, String name) {
+    private static AndroidTarget getTarget(AndroidApplication dslModel, String name) {
         return getTargets(dslModel).stream()
                 .filter(t -> Objects.equals(t.getName(), name))
                 .findFirst()
                 .orElse(null);
     }
+    */
 }

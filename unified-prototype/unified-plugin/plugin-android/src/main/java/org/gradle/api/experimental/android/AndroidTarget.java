@@ -15,12 +15,12 @@ import javax.inject.Inject;
 @NonNullApi
 public abstract class AndroidTarget implements Named {
     private final String name;
-    private final AndroidLibraryDependencies dependencies;
+    private final AndroidDeclarativeDependencies dependencies;
 
     @Inject
     public AndroidTarget(String name, ObjectFactory objectFactory) {
         this.name = name;
-        this.dependencies = objectFactory.newInstance(AndroidLibraryDependencies.class);
+        this.dependencies = objectFactory.newInstance(AndroidDeclarativeDependencies.class);
     }
 
     /**
@@ -32,12 +32,12 @@ public abstract class AndroidTarget implements Named {
     /**
      * Dependencies for this target.
      */
-    public AndroidLibraryDependencies getDependencies() {
+    public AndroidDeclarativeDependencies getDependencies() {
         return dependencies;
     }
 
     @Configuring
-    public void dependencies(Action<? super AndroidLibraryDependencies> action) {
+    public void dependencies(Action<? super AndroidDeclarativeDependencies> action) {
         action.execute(getDependencies());
     }
 

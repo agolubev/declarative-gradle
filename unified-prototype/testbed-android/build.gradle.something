@@ -1,21 +1,22 @@
 plugins {
-    id("org.gradle.experimental.android-library")
+	id("org.gradle.experimental.android-application")
 }
 
-androidLibrary {
-    jdkVersion = 17
-    compileSdk = 34
-    namespace = "org.gradle.experimental.android.library"
+androidApplication {
+    namespace = "com.example.myapplication"
+    compileSdk = 33
+}
 
-    dependencies {
-        api("com.google.guava:guava:32.1.3-jre")
-    }
-
-    targets {
-        release {
-            dependencies {
-                implementation("com.squareup.okhttp3:okhttp:4.2.2")
-            }
-        }
-    }
+// changed a little to not interfere with non declarative plugin
+declarativeDependencies {
+    implementation("com.google.guava:guava:32.1.2-jre")
+    implementation("org.apache.commons:commons-lang3:3.13.0")
+}plugins {
+}ext {
+}android {
+}compileOptions {
+}compileOptions {
+}configurations {
+}dependencies {
+}repositories {
 }

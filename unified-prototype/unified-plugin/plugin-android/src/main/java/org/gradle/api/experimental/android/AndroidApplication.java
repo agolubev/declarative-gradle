@@ -24,7 +24,7 @@ import org.gradle.declarative.dsl.model.annotations.Configuring;
 import org.gradle.declarative.dsl.model.annotations.Restricted;
 
 @Restricted
-public interface AndroidLibrary {
+public interface AndroidApplication {
     /**
      * @see CommonExtension#getCompileSdk()
      */
@@ -49,17 +49,19 @@ public interface AndroidLibrary {
     @Restricted
     public abstract Property<Integer> getJdkVersion();
 
-    AndroidLibraryDependencies getDependencies();
+    AndroidDeclarativeDependencies getDeclarativeDependencies();
 
     @Configuring
-    default void dependencies(Action<? super AndroidLibraryDependencies> action) {
-        action.execute(getDependencies());
+    default void declarativeDependencies(Action<? super AndroidDeclarativeDependencies> action) {
+        action.execute(getDeclarativeDependencies());
     }
 
-    AndroidTargets getTargets();
+    /*AndroidTargets getTargets();
 
     @Configuring
     default void targets(Action<? super AndroidTargets> action) {
         action.execute(getTargets());
     }
+
+     */
 }

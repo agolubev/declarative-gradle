@@ -1,0 +1,5 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.android.architecture.blueprints.todoapp">
+    <application android:label='A Hello Android'>
+    </application>
+</manifest>
