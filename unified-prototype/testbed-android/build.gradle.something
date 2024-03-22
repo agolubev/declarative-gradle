@@ -11,12 +11,4 @@ androidApplication {
 declarativeDependencies {
     implementation("com.google.guava:guava:32.1.2-jre")
     implementation("org.apache.commons:commons-lang3:3.13.0")
-}plugins {
-}ext {
-}android {
-}compileOptions {
-}compileOptions {
-}configurations {
-}dependencies {
-}repositories {
 }
