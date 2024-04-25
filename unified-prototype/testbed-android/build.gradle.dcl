@@ -1,5 +1,5 @@
 plugins {
-	id("org.gradle.experimental.android-application")
+    id("org.gradle.experimental.android-application")
 }
 
 androidApplication {
